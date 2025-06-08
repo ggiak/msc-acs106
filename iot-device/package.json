@@ -1,0 +1,26 @@
+{
+  "name": "iot-sensor-simulator",
+  "version": "1.0.0",
+  "description": "IoT Sensor Simulator for Temperature and Humidity Monitoring",
+  "main": "sensor_simulator.js",
+  "scripts": {
+    "start": "node sensor_simulator.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "iot",
+    "mqtt",
+    "sensor",
+    "simulator",
+    "temperature",
+    "humidity"
+  ],
+  "author": "MSC Student - IoT Exercise Implementation",
+  "license": "MIT",
+  "dependencies": {
+    "mqtt": "^4.3.7"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

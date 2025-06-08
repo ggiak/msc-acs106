@@ -2,7 +2,7 @@
   "device": {
     "id": "raspberry_pi_001",
     "name": "IoT Temperature & Humidity Sensor",
-    "location": "Laboratory Room 101"
+    "location": "Dry Aged Meat (home_101)"
   },
   "mqtt": {
     "broker_host": "localhost",

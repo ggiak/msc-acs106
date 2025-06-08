@@ -27,6 +27,40 @@ This project implements a complete IoT solution for temperature and humidity mon
 └─────────────────┘            └─────────────────┘           └─────────────────┘
 ```
 
+### Node-RED Flow Diagram
+
+The following diagram illustrates the cleaned-up Node-RED flow for the IoT Temperature & Humidity Monitoring System:
+
+```mermaid
+flowchart TD
+ subgraph Inputs["Inputs"]
+        A["Temperature Sensor"]
+        B["Humidity Sensor"]
+  end
+ subgraph subGraph1["Processing & Alerts"]
+        C["Parse Temperature"]
+        D["Parse Humidity"]
+        E["Fire Detection"]
+        F["Humidity Anomaly"]
+  end
+ subgraph subGraph2["Dashboard UI"]
+        G["Temp Gauge"]
+        H["Humidity Gauge"]
+        K["Fire Alert Toast"]
+        L["Humidity Alert Toast"]
+  end
+ subgraph Storage["Storage"]
+        M["Store Temperature"]
+        N["Store Humidity"]
+  end
+    A --> C & E
+    B --> D & F
+    C --> G & M
+    D --> H & N
+    E --> K
+    F --> L
+```
+
 ## 📦 Components
 
 ### 1. IoT Device Simulator (`iot-device/`)
@@ -51,12 +85,35 @@ This project implements a complete IoT solution for temperature and humidity mon
 
 ### Prerequisites
 
-- Docker Desktop for macOS
-- Python 3.8+ (for IoT device simulator)
+- Docker Desktop (Download from: https://docs.docker.com/get-docker/)
+- Python 3.8+ (Download from: https://www.python.org/downloads/)
 - Git
 
-### 1. Clone and Setup
+### Running the System
 
+#### Method 1: Automated Startup (Recommended)
+```bash
+# Make the startup script executable (first time only)
+chmod +x start_system.sh
+
+# Run the automated startup script
+./start_system.sh
+```
+
+#### Method 2: Manual Step-by-Step
+
+**Step 1: Start the Infrastructure**
+```bash
+docker-compose up -d
+```
+
+**Step 2: Wait for Services (about 30 seconds)**
+```bash
+# Check if containers are running
+docker-compose ps
+```
+
+**Step 3: Install Python Dependencies**
 ```bash
 # Create and activate a Python virtual environment
 python3 -m venv venv
@@ -67,28 +124,74 @@ pip install -r iot-device/requirements.txt
 pip install requests paho-mqtt numpy
 ```
 
-### 2. Start the Infrastructure
+**Step 4: Access Node-RED Editor**
+- Open your web browser
+- Go to: http://localhost:1880
+- You should see the Node-RED interface with pre-configured flows
+- Click the **"Deploy"** button (red button in the top-right corner)
 
+**Step 5: Start the IoT Device Simulator**
 ```bash
-# Start MQTT Broker and Node-RED using Docker Compose
-docker-compose up -d
-
-# Check if services are running
-docker-compose ps
-```
-
-### 3. Access the Dashboard
-
-- **Node-RED Editor**: http://localhost:1880
-- **IoT Dashboard**: http://localhost:1880/ui
-
-### 4. Run the IoT Device Simulator
-
-```bash
-# In a new terminal, activate the virtual environment and start the simulator
+# Open a new terminal window, activate the virtual environment, and start the simulator
 source venv/bin/activate
 python3 iot-device/sensor_simulator.py
 ```
+
+**Step 6: View the Dashboard**
+- Open your web browser
+- Go to: http://localhost:1880/ui
+- You should see the IoT dashboard with gauges and charts updating in real-time
+
+### What You Should See
+
+#### 1. Terminal Output (IoT Simulator)
+```
+🌡️  IoT Temperature & Humidity Sensor Simulator
+==================================================
+University of West Attica - MSC IoT Exercise
+Advanced Computer Systems Technologies
+==================================================
+2024-01-01 12:00:00,123 - INFO - 🚀 Starting IoT Sensor Simulation
+2024-01-01 12:00:01,200 - INFO - Connected to MQTT Broker successfully
+2024-01-01 12:00:01,250 - INFO - 📊 Published: Temp=23.2°C, Humidity=65.4% [Fire Risk: False]
+```
+
+#### 2. Node-RED Editor (http://localhost:1880)
+- Flow diagram with connected nodes
+- Green "connected" status under MQTT nodes
+- No error messages in the debug panel
+
+#### 3. Dashboard (http://localhost:1880/ui)
+- Temperature gauge showing current temperature
+- Humidity gauge showing current humidity
+- Line charts showing historical data trends
+- Alert notifications when temperature > 40°C
+
+### How to Stop the System
+
+#### Stop IoT Simulator
+- Press `Ctrl+C` in the terminal running the simulator
+
+#### Stop Docker Containers
+```bash
+docker-compose down
+```
+
+### How to Restart the System
+
+```bash
+docker-compose restart
+```
+
+### Testing Fire Detection
+
+To test the fire detection system:
+
+1. Edit `iot-device/config.json`
+2. Change `"fire_threshold": 40.0` to `"fire_threshold": 20.0`
+3. Or change `"anomaly_probability": 0.05` to `"anomaly_probability": 0.3`
+4. Restart the IoT simulator
+5. Watch for fire alerts in the dashboard
 
 ## 📊 Dashboard Features
 
@@ -228,24 +331,49 @@ python3 iot-device/sensor_simulator.py
         4.  Click "Install".
         5.  Click the "Deploy" button.
 
+4.  **Docker containers won't start**:
+    *   **Cause**: Docker Desktop might not be running.
+    *   **Solution**:
+        ```bash
+        # Make sure Docker Desktop is running
+        docker info
+
+        # If Docker isn't running, start Docker Desktop application
+        ```
+
+5.  **"Cannot connect to MQTT broker"**:
+    *   **Cause**: MQTT broker container might not be running properly.
+    *   **Solution**:
+        ```bash
+        # Check container status
+        docker-compose ps
+
+        # Restart containers if needed
+        docker-compose restart
+
+        # View logs for issues
+        docker-compose logs
+        ```
+
+6.  **No data in dashboard**:
+    *   **Cause**: IoT simulator might not be running or MQTT connection issues.
+    *   **Solution**:
+        1. Make sure IoT simulator is running: `python3 sensor_simulator.py`
+        2. Check Node-RED flows are deployed (click Deploy button)
+        3. Verify MQTT connection (green status in Node-RED)
+
 ### Log Files
 
 - **MQTT Broker**: `docker-compose logs mosquitto`
 - **Node-RED**: `docker-compose logs nodered`
 - **IoT Simulator**: Console output with timestamps
 
-## 📚 Documentation
-
-- [`docs/technical_documentation.md`](docs/technical_documentation.md) - Detailed technical specifications
-- [`docs/installation_guide.md`](docs/installation_guide.md) - Step-by-step installation instructions
-- [`docs/screenshots/`](docs/screenshots/) - Dashboard screenshots and examples
-
 ## 🎓 Academic Context
 
 **Course**: Advanced Computer Systems Technologies  
 **Institution**: University of West Attica  
 **Program**: MSC in Advanced Computer Systems Technologies  
-**Year**: 2023-2024
+**Year**: 2024-2025
 
 This project demonstrates:
 - IoT system design and implementation
@@ -258,15 +386,5 @@ This project demonstrates:
 ## 📄 License
 
 This project is developed for educational purposes as part of the MSC program at the University of West Attica.
-
-## 🙋‍♂️ Support
-
-For questions or issues:
-1. Check the troubleshooting section above
-2. Review the technical documentation
-3. Examine log files for error messages
-4. Verify all configuration files are properly set up
-
----
 
 **Note**: This is a simulated IoT environment designed for educational purposes. In a production environment, additional security measures, authentication, and monitoring would be required.
