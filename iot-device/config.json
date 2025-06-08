@@ -1,0 +1,38 @@
+{
+  "device": {
+    "id": "raspberry_pi_001",
+    "name": "IoT Temperature & Humidity Sensor",
+    "location": "Laboratory Room 101"
+  },
+  "mqtt": {
+    "broker_host": "localhost",
+    "broker_port": 1883,
+    "topic_temperature": "sensors/temperature",
+    "topic_humidity": "sensors/humidity",
+    "qos": 1,
+    "retain": false
+  },
+  "sensors": {
+    "temperature": {
+      "unit": "°C",
+      "min_value": 15.0,
+      "max_value": 35.0,
+      "noise_factor": 0.5,
+      "fire_threshold": 25.0
+    },
+    "humidity": {
+      "unit": "%",
+      "min_value": 30.0,
+      "max_value": 80.0,
+      "noise_factor": 2.0,
+      "low_threshold": 20.0,
+      "high_threshold": 85.0
+    }
+  },
+  "simulation": {
+    "publish_interval": 5,
+    "simulation_duration": 3600,
+    "enable_anomalies": true,
+    "anomaly_probability": 0.05
+  }
+}

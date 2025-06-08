@@ -1,0 +1,398 @@
+[
+    {
+        "id": "a1b2c3d4.e5f6g7",
+        "type": "tab",
+        "label": "IoT Sensor Dashboard",
+        "disabled": false,
+        "info": "Main flow for IoT temperature and humidity monitoring with fire detection"
+    },
+    {
+        "id": "h8i9j0k1.l2m3n4",
+        "type": "mqtt-broker",
+        "name": "IoT MQTT Broker",
+        "broker": "iot_mosquitto",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true
+    },
+    {
+        "id": "o5p6q7r8.s9t0u1",
+        "type": "ui_tab",
+        "name": "IoT Sensor Dashboard",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "v2w3x4y5.z6a7b8",
+        "type": "ui_group",
+        "name": "Sensor Readings",
+        "tab": "o5p6q7r8.s9t0u1",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "j6k7l8m9.n0o1p2",
+        "type": "ui_group",
+        "name": "Alerts & Notifications",
+        "tab": "o5p6q7r8.s9t0u1",
+        "order": 3,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "q3r4s5t6.u7v8w9",
+        "type": "ui_group",
+        "name": "System Status",
+        "tab": "o5p6q7r8.s9t0u1",
+        "order": 4,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "x0y1z2a3.b4c5d6",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "e7f8g9h0.i1j2k3",
+        "type": "mqtt in",
+        "z": "a1b2c3d4.e5f6g7",
+        "name": "Temperature Sensor",
+        "topic": "sensors/temperature",
+        "qos": "1",
+        "datatype": "json",
+        "broker": "h8i9j0k1.l2m3n4",
+        "inputs": 0,
+        "x": 150,
+        "y": 100,
+        "wires": [
+            [
+                "l4m5n6o7.p8q9r0"
+            ]
+        ]
+    },
+    {
+        "id": "s1t2u3v4.w5x6y7",
+        "type": "mqtt in",
+        "z": "a1b2c3d4.e5f6g7",
+        "name": "Humidity Sensor",
+        "topic": "sensors/humidity",
+        "qos": "1",
+        "datatype": "json",
+        "broker": "h8i9j0k1.l2m3n4",
+        "inputs": 0,
+        "x": 150,
+        "y": 400,
+        "wires": [
+            [
+                "z8a9b0c1.d2e3f4"
+            ]
+        ]
+    },
+    {
+        "id": "l4m5n6o7.p8q9r0",
+        "type": "function",
+        "z": "a1b2c3d4.e5f6g7",
+        "name": "Parse Temperature",
+        "func": "return msg;",
+        "outputs": 1,
+        "x": 350,
+        "y": 100,
+        "wires": [
+            [
+                "g5h6i7j8.k9l0m1",
+                "u9v0w1x2.y3z4a5",
+                "b6c7d8e9.f0g1h2"
+            ]
+        ]
+    },
+    {
+        "id": "z8a9b0c1.d2e3f4",
+        "type": "function",
+        "z": "a1b2c3d4.e5f6g7",
+        "name": "Parse Humidity",
+        "func": "return msg;",
+        "outputs": 1,
+        "x": 350,
+        "y": 400,
+        "wires": [
+            [
+                "i3j4k5l6.m7n8o9",
+                "w7x8y9z0.a1b2c3",
+                "d4e5f6g7.h8i9j0"
+            ]
+        ]
+    },
+    {
+        "id": "u9v0w1x2.y3z4a5",
+        "type": "function",
+        "z": "a1b2c3d4.e5f6g7",
+        "name": "Fire Detection",
+        "func": "if (msg.payload.value >= 40) { msg.topic = \"🔥 FIRE ALERT! Temperature: \" + msg.payload.value + \"°C\"; return [msg, null]; } else { return [null, msg]; }",
+        "outputs": 2,
+        "x": 540,
+        "y": 100,
+        "wires": [
+            [
+                "k1l2m3n4.o5p6q7"
+            ],
+            [
+                "r8s9t0u1.v2w3x4"
+            ]
+        ]
+    },
+    {
+        "id": "w7x8y9z0.a1b2c3",
+        "type": "function",
+        "z": "a1b2c3d4.e5f6g7",
+        "name": "Humidity Anomaly",
+        "func": "if (msg.payload.value < 20 || msg.payload.value > 85) { msg.topic = \"💧 HUMIDITY ALERT! Humidity: \" + msg.payload.value + \"%\"; return [msg, null]; } else { return [null, msg]; }",
+        "outputs": 2,
+        "x": 550,
+        "y": 400,
+        "wires": [
+            [
+                "y5z6a7b8.c9d0e1"
+            ],
+            [
+                "r8s9t0u1.v2w3x4"
+            ]
+        ]
+    },
+    {
+        "id": "b6c7d8e9.f0g1h2",
+        "type": "function",
+        "z": "a1b2c3d4.e5f6g7",
+        "name": "Store Temperature",
+        "func": "context.set('temperature', msg.payload); return null;",
+        "outputs": 1,
+        "x": 550,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d4e5f6g7.h8i9j0",
+        "type": "function",
+        "z": "a1b2c3d4.e5f6g7",
+        "name": "Store Humidity",
+        "func": "context.set('humidity', msg.payload); return null;",
+        "outputs": 1,
+        "x": 540,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "r8s9t0u1.v2w3x4",
+        "type": "debug",
+        "z": "a1b2c3d4.e5f6g7",
+        "name": "Normal Status",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "g5h6i7j8.k9l0m1",
+        "type": "ui_gauge",
+        "z": "a1b2c3d4.e5f6g7",
+        "name": "Temperature Gauge",
+        "group": "v2w3x4y5.z6a7b8",
+        "order": 1,
+        "width": 6,
+        "height": 5,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "°C",
+        "format": "{{msg.payload.value}}",
+        "min": 0,
+        "max": 60,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "25",
+        "seg2": "40",
+        "x": 550,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "i3j4k5l6.m7n8o9",
+        "type": "ui_gauge",
+        "z": "a1b2c3d4.e5f6g7",
+        "name": "Humidity Gauge",
+        "group": "v2w3x4y5.z6a7b8",
+        "order": 2,
+        "width": 6,
+        "height": 5,
+        "gtype": "gage",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{msg.payload.value}}",
+        "min": 0,
+        "max": 100,
+        "colors": [
+            "#ca3838",
+            "#00b500",
+            "#ca3838"
+        ],
+        "seg1": "30",
+        "seg2": "70",
+        "x": 540,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "k1l2m3n4.o5p6q7",
+        "type": "ui_toast",
+        "z": "a1b2c3d4.e5f6g7",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "FIRE ALERT",
+        "name": "Fire Alert",
+        "x": 1000,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "y5z6a7b8.c9d0e1",
+        "type": "ui_toast",
+        "z": "a1b2c3d4.e5f6g7",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "Humidity Anomaly",
+        "name": "Humidity Alert",
+        "x": 1020,
+        "y": 400,
+        "wires": []
+    }
+]

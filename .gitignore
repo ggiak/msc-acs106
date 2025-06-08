@@ -1,0 +1,29 @@
+.idea
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+pip-selfcheck.json
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+_cacache/
+
+# macOS
+.DS_Store
+
+# Project-specific
+/mosquitto/data/
+/mosquitto/log/
+/nodered/data/
